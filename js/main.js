@@ -1,17 +1,35 @@
-const GameBoard = (function(){})()
+
+const GameBoardModule = (function () {
+    const board = [];
+
+    function getGameBoard() {
+        return board;
+    }
+    function resetBoard() {
+        board.length = 0;
+    }
+    function addMarktoBoard(row, column, mark) {
+        board[row][column] = mark;
+        return board;
+    }
+    return { getGameBoard, resetBoard, addMarktoBoard }
+})()
+
+const displayCounter = (function () { })()
+
 
 const createPlayer = function (name) {
     let score = 0;
 
-    const incrementScore = function () {
+    function incrementScore() {
         return ++score;
     }
 
-    const getScore = function () {
+    function getScore() {
         return score
     }
 
-    const getName = function () {
+    function getName() {
         return name;
     }
 
