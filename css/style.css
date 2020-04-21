@@ -3,3 +3,14 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+    table-layout: fixed;
+    width: 180px;
+    height: 180px;
+}
+td {
+    border: 1px solid black;
+}
