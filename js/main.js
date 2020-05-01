@@ -17,34 +17,19 @@ const GameBoardModule = (function () {
 
     return { getGameBoard, resetBoard, addMarktoBoard }
 })()
-function handleMark(row, column) {
-    GameBoardModule.addMarktoBoard(row, column, 'x')
-}
-const displayController = (function () {
-    function addMarkToBoard() {
-        
-    }
-    function renderBoard() {
-        const table = document.querySelector('#table');
-        let boardTable = '';
 
-        for (let i = 0; i < 3; i++) {
-            boardTable += `<tr>`
-            for (let j = 0; j < 3; j++) {
-                boardTable += `<td  onclick="handleMark(${i}, ${j})">
-            x
-            </td>`
-            }
-            boardTable += `</tr>`
-        }
-        table.innerHTML = boardTable;
-    }
-    return { renderBoard }
+
+
+const displayControllerModule = (function () {
+
+
+
+    return {}
 })()
 
 
 
-const createPlayer = function (name, mark) {
+const playerFactory = function (name, mark) {
     let score = 0;
 
     function incrementScore() {
@@ -71,6 +56,6 @@ const createPlayer = function (name, mark) {
     }
 }
 
-
-
-displayController.renderBoard();
+const player1 = playerFactory('hicham', 'x')
+const player2 = playerFactory('ahmed', 'o')
+console.log('player 1 :', player1);

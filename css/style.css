@@ -4,13 +4,28 @@
     box-sizing: border-box;
 }
 
-table {
-    border-collapse: collapse;
-    border: 1px solid black;
-    table-layout: fixed;
-    width: 180px;
-    height: 180px;
+.main {
+    width: 500px;
+    height: 500px;
 }
-td {
-    border: 1px solid black;
+
+.board {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    border: solid 1px black;
+}
+.board .row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px black;
+}
+.board .row .column {
+    width: 100%;
+    height: 33.33%;
+    border: black solid 1px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 165px;
 }
