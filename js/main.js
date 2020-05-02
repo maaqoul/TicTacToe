@@ -27,7 +27,7 @@ const playerFactory = function (name, mark) {
 }
 
 const GameBoardModule = (function () {
-    const board = ['', '', '', '', '', '', '', '']
+    const board = ['', '', '', '', '', '', '', '', '']
 
     function addToBoard(index, player) {
         board[index] = player
@@ -53,6 +53,7 @@ const playFlowModule = (function () {
     let toggleTurn = true
     const firstPlayer = playerFactory('hicham', 'x');
     const secondPlayer = playerFactory('ahmed', 'o');
+    const board = GameBoardModule.getBoard()
     function takeTurn() {
         const currentPlayer = toggleTurn ? firstPlayer : secondPlayer;
         toggleTurn = !toggleTurn
@@ -60,17 +61,44 @@ const playFlowModule = (function () {
     }
 
     function checkForWinner() {
-        // check for vertical rows
-        for (let i = 0; i < 4; i + 3) {
-            const firstColumn = GameBoardModule.getBoard()[i];
-            const secondColumn = GameBoardModule.getBoard()[i + 1];
-            const thirdColumn = GameBoardModule.getBoard()[i + 2];
-            if (typeof firstPlayer !== '' && firstColumn === secondColumn && secondColumn === thirdColumn) {
-                console.log(firstPlayer)
+        // check for columns 
+
+        for (let i = 0; i <= 8; i += 3) {
+            const firstColumn = board[i];
+            const secondColumn = board[i + 1];
+            const thirdColumn = board[i + 2];
+            if (firstColumn !== '' && firstColumn === secondColumn && thirdColumn === secondColumn) {
+                alert(firstColumn.getName() + ' is the winner')
             }
         }
+
+        // check for rows
+        for (let i = 0; i <= 3; i++) {
+            const firstColumn = board[i];
+            const secondColumn = board[i + 3];
+            const thirdColumn = board[i + 6];
+            if (firstColumn !== '' && firstColumn === secondColumn && thirdColumn === secondColumn) {
+                alert(firstColumn.getName() + ' is the winner')
+            }
+        }
+
+        let firstColumn = board[0];
+        let secondColumn = board[4];
+        let thirdColumn = board[8];
+
+        if (firstColumn !== '' && firstColumn === secondColumn && thirdColumn === secondColumn) {
+            alert(firstColumn.getName() + ' is the winner')
+        }
+
+        firstColumn = board[2];
+        secondColumn = board[4];
+        thirdColumn = board[6];
+
+        if (firstColumn !== '' && firstColumn === secondColumn && thirdColumn === secondColumn) {
+            alert(firstColumn.getName() + ' is the winner')
+        }
     }
-    return { takeTurn, player1: firstPlayer, player2: secondPlayer, checkForWinner }
+    return { takeTurn, firstPlayer, secondPlayer, checkForWinner }
 })()
 
 const displayControllerModule = (function () {
@@ -82,12 +110,11 @@ const displayControllerModule = (function () {
             if (target.innerText === '') {
                 const index = Number(target.dataset.pos);
                 const player = playFlowModule.takeTurn();
-                console.log(index)
                 target.innerText = player.getMark();
-                if (GameBoardModule.getBoard()[index] === undefined) {
+                if (target.innerText !== '') {
                     GameBoardModule.addToBoard(index, player)
+                    playFlowModule.checkForWinner()
                 }
-                // playFlowModule.checkForWinner()
             }
         })
     }
