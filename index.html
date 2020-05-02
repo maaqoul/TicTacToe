@@ -10,6 +10,17 @@
 
 <body>
     <main class="main">
+        <div class="players">
+            <div class="first-player">
+                <input type="text" name="firstPlayer" id="">
+                <button>confirm</button>
+            </div>
+            <div class="second-player">
+                <input type="text" name="secondPlayer" id="">
+                <button>confirm</button>
+            </div>
+        </div>
+
         <div class="board">
             <div class="row">
                 <div class="column" data-pos="0"></div>
@@ -26,6 +37,12 @@
                 <div class="column" data-pos="5"></div>
                 <div class="column" data-pos="8"></div>
             </div>
+        </div>
+
+        <div class="score">
+            <h3>scores : </h3>
+            <span>player1 : 1 point</span> </br>
+            <span>player2 : 1 point</span>
         </div>
     </main>
     <script src="./js/main.js"></script>
