@@ -55,16 +55,21 @@ const playFlowModule = (function () {
     const submitSecondPlayer = document.getElementById('submit-second-player');
     let firstPlayer;
     let secondPlayer;
+
     submitFirstPlayer.addEventListener('click', () => {
         const firstPlayerInput = document.getElementById('first-player');
         firstPlayer = playerFactory(firstPlayerInput.value, 'x');
         firstPlayerInput.disabled = true;
+        displayControllerModule.displayPlayerName('first-player-label', firstPlayer.getName())
     });
+
     submitSecondPlayer.addEventListener('click', () => {
         const secondPlayerInput = document.getElementById('second-player');
         secondPlayer = playerFactory(secondPlayerInput.value, 'o');
         secondPlayerInput.disabled = true;
+        displayControllerModule.displayPlayerName('second-player-label', secondPlayer.getName())
     });
+
     const board = GameBoardModule.getBoard()
     function takeTurn() {
         const currentPlayer = toggleTurn ? firstPlayer : secondPlayer;
@@ -80,7 +85,7 @@ const playFlowModule = (function () {
             const secondColumn = board[i + 1];
             const thirdColumn = board[i + 2];
             if (!!firstColumn && firstColumn === secondColumn && thirdColumn === secondColumn) {
-                alert(firstColumn.getName() + ' is the winner')
+                displayControllerModule.displayWinner(firstColumn, firstPlayer, secondPlayer);
             }
         }
 
@@ -90,7 +95,7 @@ const playFlowModule = (function () {
             const secondColumn = board[i + 3];
             const thirdColumn = board[i + 6];
             if (!!firstColumn && firstColumn === secondColumn && thirdColumn === secondColumn) {
-                alert(firstColumn.getName() + ' is the winner')
+                displayControllerModule.displayWinner(firstColumn, firstPlayer, secondPlayer);
             }
         }
 
@@ -99,7 +104,7 @@ const playFlowModule = (function () {
         let thirdColumn = board[8];
 
         if (!!firstColumn && firstColumn === secondColumn && thirdColumn === secondColumn) {
-            alert(firstColumn.getName() + ' is the winner')
+            displayControllerModule.displayWinner(firstColumn, firstPlayer, secondPlayer);
         }
 
         firstColumn = board[2];
@@ -107,7 +112,7 @@ const playFlowModule = (function () {
         thirdColumn = board[6];
 
         if (!!firstColumn && firstColumn === secondColumn && thirdColumn === secondColumn) {
-            alert(firstColumn.getName() + ' is the winner')
+            displayControllerModule.displayWinner(firstColumn, firstPlayer, secondPlayer);
         }
     }
     return { takeTurn, firstPlayer, secondPlayer, checkForWinner }
@@ -115,7 +120,8 @@ const playFlowModule = (function () {
 
 const displayControllerModule = (function () {
 
-    const columnElement = document.querySelectorAll('.column')
+    const columnElement = document.querySelectorAll('.column');
+    const winner = document.getElementById('winner');
 
     for (const column of columnElement) {
         column.addEventListener('click', ({ target }) => {
@@ -130,6 +136,34 @@ const displayControllerModule = (function () {
             }
         })
     }
+
+    function resetGame() {
+        for (const column of columnElement) {
+            column.innerText = '';
+        }
+        winner.innerHTML = '';
+        GameBoardModule.resetBoard()
+        console.log('i ve been clicked')
+    }
+    function displayPlayerName(id, name) {
+        const firstPlayerLabel = document.getElementById(id);
+        firstPlayerLabel.innerHTML = name
+    }
+
+    function displayWinner(player, firstPlayer, secondPlayer) {
+        player.incrementScore();
+        winner.innerHTML = `${player.getName()} is the winner <br> <button id=""> reset </button>`;
+        displayPlayersScore(firstPlayer, secondPlayer);
+    }
+
+    function displayPlayersScore(firstPlayer, secondPlayer) {
+        const firstPlayerScore = document.getElementById('first-player-score');
+        const secondPlayerScore = document.getElementById('second-player-score');
+        firstPlayerScore.innerHTML = firstPlayer?.getScore()
+        secondPlayerScore.innerHTML = secondPlayer?.getScore()
+    }
+
+    return { displayPlayerName, displayPlayersScore, displayWinner }
 })()
 
 
