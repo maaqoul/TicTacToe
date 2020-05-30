@@ -50,9 +50,21 @@ const GameBoardModule = (function () {
 
 
 const playFlowModule = (function () {
-    let toggleTurn = true
-    const firstPlayer = playerFactory('hicham', 'x');
-    const secondPlayer = playerFactory('ahmed', 'o');
+    let toggleTurn = true;
+    const submitFirstPlayer = document.getElementById('submit-first-player');
+    const submitSecondPlayer = document.getElementById('submit-second-player');
+    let firstPlayer;
+    let secondPlayer;
+    submitFirstPlayer.addEventListener('click', () => {
+        const firstPlayerInput = document.getElementById('first-player');
+        firstPlayer = playerFactory(firstPlayerInput.value, 'x');
+        firstPlayerInput.disabled = true;
+    });
+    submitSecondPlayer.addEventListener('click', () => {
+        const secondPlayerInput = document.getElementById('second-player');
+        secondPlayer = playerFactory(secondPlayerInput.value, 'o');
+        secondPlayerInput.disabled = true;
+    });
     const board = GameBoardModule.getBoard()
     function takeTurn() {
         const currentPlayer = toggleTurn ? firstPlayer : secondPlayer;
@@ -61,13 +73,13 @@ const playFlowModule = (function () {
     }
 
     function checkForWinner() {
-        // check for columns 
 
+        // check for columns 
         for (let i = 0; i <= 8; i += 3) {
             const firstColumn = board[i];
             const secondColumn = board[i + 1];
             const thirdColumn = board[i + 2];
-            if (firstColumn !== '' && firstColumn === secondColumn && thirdColumn === secondColumn) {
+            if (!!firstColumn && firstColumn === secondColumn && thirdColumn === secondColumn) {
                 alert(firstColumn.getName() + ' is the winner')
             }
         }
@@ -77,7 +89,7 @@ const playFlowModule = (function () {
             const firstColumn = board[i];
             const secondColumn = board[i + 3];
             const thirdColumn = board[i + 6];
-            if (firstColumn !== '' && firstColumn === secondColumn && thirdColumn === secondColumn) {
+            if (!!firstColumn && firstColumn === secondColumn && thirdColumn === secondColumn) {
                 alert(firstColumn.getName() + ' is the winner')
             }
         }
@@ -86,7 +98,7 @@ const playFlowModule = (function () {
         let secondColumn = board[4];
         let thirdColumn = board[8];
 
-        if (firstColumn !== '' && firstColumn === secondColumn && thirdColumn === secondColumn) {
+        if (!!firstColumn && firstColumn === secondColumn && thirdColumn === secondColumn) {
             alert(firstColumn.getName() + ' is the winner')
         }
 
@@ -94,7 +106,7 @@ const playFlowModule = (function () {
         secondColumn = board[4];
         thirdColumn = board[6];
 
-        if (firstColumn !== '' && firstColumn === secondColumn && thirdColumn === secondColumn) {
+        if (!!firstColumn && firstColumn === secondColumn && thirdColumn === secondColumn) {
             alert(firstColumn.getName() + ' is the winner')
         }
     }
@@ -107,11 +119,11 @@ const displayControllerModule = (function () {
 
     for (const column of columnElement) {
         column.addEventListener('click', ({ target }) => {
-            if (target.innerText === '') {
+            if (!(!!target.innerText)) {
                 const index = Number(target.dataset.pos);
                 const player = playFlowModule.takeTurn();
                 target.innerText = player.getMark();
-                if (target.innerText !== '') {
+                if (!!target.innerText) {
                     GameBoardModule.addToBoard(index, player)
                     playFlowModule.checkForWinner()
                 }

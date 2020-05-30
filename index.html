@@ -12,12 +12,14 @@
     <main class="main">
         <div class="players">
             <div class="first-player">
-                <input type="text" name="firstPlayer" id="">
-                <button>confirm</button>
+                <label for="first-player">first player :</label> <br>
+                <input type="text" name="firstPlayer" id="first-player" placeholder="first player has 'x'">
+                <button id="submit-first-player">confirm</button>
             </div>
             <div class="second-player">
-                <input type="text" name="secondPlayer" id="">
-                <button>confirm</button>
+                <label for="second-player">second player: </label> <br>
+                <input type="text" name="secondPlayer" id="second-player" placeholder="second player has 'o'">
+                <button id="submit-second-player">confirm</button>
             </div>
         </div>
 
@@ -41,8 +43,14 @@
 
         <div class="score">
             <h3>scores : </h3>
-            <span>player1 : 1 point</span> </br>
-            <span>player2 : 1 point</span>
+            <div class="first-player-score">
+                <label for="first-player-score" id="first-player-score-label">first player</label>
+                <span id="first-player-score">0</span>
+            </div>
+            <div class="second-player-score">
+                <label for="second-player-score" id="second-player-score-label">second player</label> 
+                <span id="second-player-score">0</span>
+            </div>
         </div>
     </main>
     <script src="./js/main.js"></script>
